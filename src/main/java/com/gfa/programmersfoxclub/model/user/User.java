@@ -17,10 +17,19 @@ public class User {
   private long id;
   private String userName;
   private String email;
-  @OneToMany(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
+  @Transient
+  private String password;
+  private String passwordHash;
+  @OneToOne(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
   private List<Fox> foxList;
 
   public User() {
+    foxList = new ArrayList<>();
+  }
+
+  public User(String username, String password) {
+    this.userName = username;
+    this.password = password;
     foxList = new ArrayList<>();
   }
 }
