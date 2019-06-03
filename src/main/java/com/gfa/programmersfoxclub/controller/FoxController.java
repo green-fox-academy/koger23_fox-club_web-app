@@ -13,7 +13,6 @@ import com.gfa.programmersfoxclub.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -32,6 +31,10 @@ public class FoxController {
 
   @GetMapping("/create_fox")
   public String renderCreateFox(Model model) {
+    User user = userService.getLoggedInUser();
+    if(user == null) {
+      return "redirect:/login";
+    }
     model.addAttribute("fox", new Fox());
     return "create_fox";
   }
@@ -39,6 +42,9 @@ public class FoxController {
   @PostMapping("/create_fox")
   public String createFox(Model model, Fox fox) {
     User user = userService.getLoggedInUser();
+    if(user == null) {
+      return "redirect:/login";
+    }
     fox.setOwner(user);
     Food defaultFood = new Food();
     Drink defaultDrink = new Drink();
@@ -52,8 +58,8 @@ public class FoxController {
     fox.getTrick_list().add(default_trick);
 
     foxService.save(fox);
-//    model.addAttribute("fox", foxService.findFoxByOwner());
-    model.addAttribute("fox", fox);
+    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    model.addAttribute("user", userService.getLoggedInUser());
     return "index";
   }
 }

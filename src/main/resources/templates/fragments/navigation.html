@@ -19,8 +19,8 @@
                     <a class="navigation-link" href="/nutritionstore">Nutrition Store</a>
                     <a class="navigation-link" href="/trickcenter">Trick Center</a>
                     <a class="navigation-link" href="/actionhistory">Action History</a>
-                    <a class="navigation-link" th:if="${activeFoxIndex} == 0" href="/login" th:text="Login"></a>
-                    <a class="navigation-link" th:if="${activeFoxIndex} != 0" href="/logout"th:text="Logout"></a>
+                    <a class="navigation-link" th:if="${user} == null" href="/login" th:text="Login"></a>
+                    <a class="navigation-link" th:if="${user} != 0" href="/logout"th:text="Logout"></a>
                 </div>
             </nav>
         </div>

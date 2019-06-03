@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Action History</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div th:replace="fragments/navigation :: copy"></div>
+    <div class="content">
+        <div class="actionlist">
+            <ul th:if="${actionHistoryLogger.actionList.size()} != 0" th:each="action : ${actionHistoryLogger.actionList}">
+                <li th:text="${action}"></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

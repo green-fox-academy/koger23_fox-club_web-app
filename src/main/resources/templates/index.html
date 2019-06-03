@@ -25,21 +25,21 @@
             </div>
         </div>
         <div class="fox-infos">
-            <p th:text="'This is ' + ${fox.name} + '. Currently living on ' + ${fox.food.name} + ' and ' + ${fox.drink.name} + '. He knows ' + ${fox.trickList.size()} + ' trick(s)'"></p>
+            <p th:text="'This is ' + ${fox.name} + '. Currently living on ' + ${fox.food.name} + ' and ' + ${fox.drink.name} + '. He knows ' + ${fox.trick_list.size()} + ' trick(s).'"></p>
         </div>
         <h1>Known tricks</h1>
         <div class="tricklist">
-            <ul th:each="trick : ${fox.trickList}">
-                <li th:text="${trick}"></li>
+            <ul th:each="trick : ${fox.trick_list}">
+                <li th:text="${trick.name}"></li>
             </ul>
         </div>
         <h1>Action history</h1>
-        <div class="actionlist">
-            <ul th:if="${actionHistoryLogger.actionList.size()} != 0" th:each="action : ${actionHistoryLogger.getLastFiveAction()}">
-                <li th:text="${action}"></li>
-            </ul>
-            <span th:unless="${actionHistoryLogger.actionList.size()} != 0">No actions so far.</span>
-        </div>
+<!--        <div class="actionlist">-->
+<!--            <ul th:if="${actionHistoryLogger.actionList.size()} != 0" th:each="action : ${actionHistoryLogger.getLastFiveAction()}">-->
+<!--                <li th:text="${action}"></li>-->
+<!--            </ul>-->
+<!--            <span th:unless="${actionHistoryLogger.actionList.size()} != 0">No actions so far.</span>-->
+<!--        </div>-->
     </div>
 </body>
 </html>

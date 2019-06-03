@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 public class HomeController {
   private IFoxService foxService;
@@ -19,12 +20,13 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public void renderIndex() {
-  }
-
-  @GetMapping("/login")
-  public String renderLogin(Model model) {
-    model.addAttribute("fox", new User());
-    return "create_fox";
+  public String renderIndex(Model model) {
+    User user = userService.getLoggedInUser();
+    if(user == null) {
+      return "redirect:/login";
+    }
+    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    model.addAttribute("user", userService.getLoggedInUser());
+    return "index";
   }
 }

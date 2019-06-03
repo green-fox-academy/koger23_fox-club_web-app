@@ -15,7 +15,7 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
-  private String userName;
+  private String username;
   private String email;
   @Transient
   private String password;
@@ -28,8 +28,14 @@ public class User {
   }
 
   public User(String username, String password) {
-    this.userName = username;
+    this.username = username;
     this.password = password;
+    foxList = new ArrayList<>();
+  }
+  public User(String username, String password, String email) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
     foxList = new ArrayList<>();
   }
 }

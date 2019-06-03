@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nutrition Store</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div th:replace="fragments/navigation :: copy"></div>
+    <div class="content">
+        <div th:class="|select-menu ${fox.color}|">
+            <form th:class="${fox.color}" th:action="@{/nutritionsave}" th:method="post">
+                    <label for="food">Food</label>
+                    <select id="food" name="food" class="select-menu">
+                        <option value="Pizza">Pizza</option>
+                        <option value="Salad">Salad</option>
+                        <option value="Rotten tomato">Rotten tomato</option>
+                        <option value="Human Tibia">Human Tibia</option>
+                        <option value="Something from the garbage">Something from the garbage</option>
+                    </select>
+                    <label for="drink">Drink</label>
+                    <select id="drink" name="drink" class="select-menu">
+                        <option value="Beer">Beer</option>
+                        <option value="Orange juice">Orange juice</option>
+                        <option value="Giant milk">Giant milk</option>
+                        <option value="Rain water">Rain water</option>
+                        <option value="Tear of virgins">Tear of virgins</option>
+                    </select>
+                    <button th:type="submit">Change</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

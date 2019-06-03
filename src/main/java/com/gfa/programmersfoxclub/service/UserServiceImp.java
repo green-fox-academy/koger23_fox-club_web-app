@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 @Service
 public class UserServiceImp implements IUserService {
@@ -35,7 +34,7 @@ public class UserServiceImp implements IUserService {
 
   @Override
   public boolean validateAndLoginUser(User user) {
-    User userFromDb = userRepository.findByUserName(user.getUserName());
+    User userFromDb = userRepository.findByUsername(user.getUsername());
     if (userFromDb == null) return false;
     if (passwordEncoder.matches(user.getPassword(), userFromDb.getPasswordHash())) {
       logInUser(user);
@@ -46,7 +45,7 @@ public class UserServiceImp implements IUserService {
 
   @Override
   public Validation validateAndLoginUser(User user, Validation validation) {
-    User userFromDb = userRepository.findByUserName(user.getUserName());
+    User userFromDb = userRepository.findByUsername(user.getUsername());
     if (userFromDb == null) {
       validation.setMessage("User does not exists.");
       return validation;
@@ -62,18 +61,18 @@ public class UserServiceImp implements IUserService {
   }
 
   @Override
-  public User createUser(String userName, String password) {
-    User newUser = new User(userName, password);
+  public User createUser(String username, String password, String email) {
+    User newUser = new User(username, password, email);
     newUser.setPasswordHash(passwordEncoder.encode(password));
     userRepository.save(newUser);
-    User userFromDb = userRepository.findByUserName(newUser.getUserName());
+    User userFromDb = userRepository.findByUsername(newUser.getUsername());
     logInUser(userFromDb);
     return userFromDb;
   }
 
   @Override
   public void logInUser(User user) {
-    User userFromDb = userRepository.findByUserName(user.getUserName());
+    User userFromDb = userRepository.findByUsername(user.getUsername());
     session.setAttribute(sessionKey, userFromDb);
   }
 }

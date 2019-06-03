@@ -1,0 +1,307 @@
+:root {
+    --bluefox-light-green:      #008FFF;
+    --bluefox-dark-green:       #0066EA;
+    --greenfox-light-green:     #3CB878;
+    --greenfox-dark-green:      #007335;
+    --font-family:              Montserrat,sans-serif;
+    --redfox-light-green:       #FF9800;
+    --redfox-dark-green:        #FF5500;
+}
+
+* {
+    font-family: var(--font-family);
+}
+
+body {
+    width: 500px;
+    margin: 0 auto;
+}
+
+
+.content {
+    margin-top: 80px;
+}
+
+.green button {
+    background-color: var(--greenfox-light-green);
+}
+.blue button {
+    background-color: var(--bluefox-light-green);
+}
+.red button {
+    background-color: var(--redfox-light-green);
+}
+
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-style: inset;
+    border-width: 1px;
+    width: 480px;
+}
+
+label {
+    color: black;
+}
+
+button {
+    border: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 16px;
+    padding: 10px;
+    min-width: 100px;
+}
+
+.usernametip {
+    font-size: 12px;
+}
+
+.green a:active {
+    background-color: var(--greenfox-dark-green);
+}
+
+.green h1 {
+    color: var(--greenfox-light-green);
+}
+
+.blue h1 {
+    color: var(--bluefox-light-green);
+}
+
+.red h1 {
+    color: var(--redfox-light-green);
+}
+
+.site-name {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 30px;
+    height: fit-content;
+    margin-right: 10px;
+    vertical-align: center;
+}
+
+.logo {
+    display: inline-flex;
+    flex-direction: row;
+    align-content: space-between;
+    vertical-align: center;
+    margin-bottom: 10px;
+    width: 500px;
+}
+
+.navigation-container {
+    display:            flex;
+    flex-direction:     column;
+    vertical-align: center;
+}
+
+.navbar {
+    margin-right: 5px;
+    width: 500px;
+}
+
+.navigation-link {
+    vertical-align: center;
+    padding:        10px 6px 10px;
+}
+
+a {
+    color: #424242;
+}
+
+a:link {
+    color: #424242;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.green a:hover {
+    background-color: var(--greenfox-light-green);
+}
+.blue a:hover {
+    background-color: var(--bluefox-light-green);
+}
+.red a:hover {
+    background-color: var(--redfox-light-green);
+}
+
+.fox-info-container {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.fox_info {
+    display: flex;
+    align-content: space-between;
+}
+
+.avatar {
+    width: 300px;
+}
+
+.green select:focus, .green select:hover {
+    border-color: var(--greenfox-light-green);
+    color: var(--greenfox-light-green);
+}
+.blue select:focus, .blue select:hover {
+    border-color: var(--bluefox-light-green);
+    color: var(--bluefox-light-green);
+}
+.red select:focus, .red select:hover {
+    border-color: var(--redfox-light-green);
+    color: var(--redfox-light-green);
+}
+
+input {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: black;
+    font-size: 16px;
+    margin: 5px 20px 5px 5px;
+    padding: 5px 5px;
+}
+
+.green input {
+    border: 1px solid var(--greenfox-light-green);
+}
+.blue input {
+    border: 1px solid var(--bluefox-light-green);
+}
+.red input {
+    border: 1px solid var(--redfox-light-green);
+}
+
+input:focus {
+    outline-style: auto;
+    -moz-outline-radius: 2px;
+}
+
+.green input:focus {
+    outline: 2px solid var(--greenfox-light-green);
+}
+.blue input:focus {
+    outline: 2px solid var(--bluefox-light-green);
+}
+.red input:focus {
+    outline: 2px solid var(--redfox-light-green);
+}
+
+.select-menu {
+    background: #FFFFFF;
+    margin: 5px 20px 5px 5px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.green option:checked {
+    -webkit-box-shadow: inset 0 var(--greenfox-light-green);
+    -moz-box-shadow: inset 0 var(--greenfox-light-green);
+    box-shadow: inset hoff 0 var(--greenfox-light-green);
+}
+.blue option:checked {
+    -webkit-box-shadow: inset 0 var(--bluefox-light-green);
+    -moz-box-shadow: inset 0 var(--bluefox-light-green);
+    box-shadow: inset hoff 0 var(--bluefox-light-green);
+}
+.red option:checked {
+    -webkit-box-shadow: inset 0 var(--redfox-light-green);
+    -moz-box-shadow: inset 0 var(--redfox-light-green);
+    box-shadow: inset hoff 0 var(--redfox-light-green);
+}
+
+.select-menu option:checked {
+    font-weight: bold;
+}
+
+li {
+    padding: 5px;
+}
+
+@media (min-width: 900px) {
+
+    body {
+        width: 1200px;
+        margin: 0 auto;
+    }
+
+    .navigation-w-line {
+        display: inline;
+        position: fixed;
+        top: 0;
+        width: 900px;
+        background-color: #FFFFFF;
+    }
+
+    .navigation-container {
+        display:            flex;
+        flex-direction:     row;
+        align-content:      center;
+        align-items:        center;
+        justify-content:    flex-start;
+    }
+
+    .logo {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        margin-bottom: 0;
+        justify-content: space-between;
+    }
+
+    hr {
+        width: 880px;
+    }
+
+    .navigation-link {
+        vertical-align: center;
+        padding:        28px 6px 28px;
+    }
+
+    .site-name {
+        display: flex;
+        font-weight: bold;
+        font-size: 28px;
+        vertical-align: center;
+    }
+/*    Login*/
+    .login-form {
+        width: 340px;
+        margin: 50px auto;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+
+    .form-group {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+}

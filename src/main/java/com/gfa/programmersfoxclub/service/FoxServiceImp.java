@@ -57,7 +57,6 @@ public class FoxServiceImp implements IFoxService {
 
   @Override
   public Fox findFoxByOwner(User owner) {
-//    return foxRepository.findFoxByOwner(owner);
-    return null;
+    return foxRepository.findByOwner(owner);
   }
 }

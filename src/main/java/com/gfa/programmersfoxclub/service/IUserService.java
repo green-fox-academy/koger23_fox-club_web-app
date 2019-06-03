@@ -8,6 +8,6 @@ public interface IUserService {
   void logout();
   boolean validateAndLoginUser(User user);
   Validation validateAndLoginUser(User user, Validation validation);
-  User createUser(String username, String password);
+  User createUser(String username, String password, String email);
   void logInUser(User user);
 }
