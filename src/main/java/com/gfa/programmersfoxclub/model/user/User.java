@@ -20,8 +20,8 @@ public class User {
   @Transient
   private String password;
   private String passwordHash;
-  @OneToOne(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
-  private List<Fox> foxList;
+  @OneToMany(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
+  private List<Long> foxList;
 
   public User() {
     foxList = new ArrayList<>();

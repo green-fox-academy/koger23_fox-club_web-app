@@ -21,5 +21,6 @@ public class Trick {
 
   public Trick() {
     fox = new ArrayList<>();
+    name = "hunting";
   }
 }

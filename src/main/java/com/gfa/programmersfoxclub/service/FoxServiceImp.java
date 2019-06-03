@@ -1,13 +1,18 @@
 package com.gfa.programmersfoxclub.service;
 
 import com.gfa.programmersfoxclub.model.character.Fox;
+import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.repository.IFoxRepository;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Setter
+@Getter
 public class FoxServiceImp implements IFoxService {
   private IFoxRepository foxRepository;
 
@@ -48,5 +53,11 @@ public class FoxServiceImp implements IFoxService {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public Fox findFoxByOwner(User owner) {
+//    return foxRepository.findFoxByOwner(owner);
+    return null;
   }
 }

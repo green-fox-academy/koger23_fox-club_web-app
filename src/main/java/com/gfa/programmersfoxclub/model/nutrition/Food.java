@@ -25,5 +25,6 @@ public class Food extends Nutrition {
     super(Type.FOOD);
     setReductionTimeMinutes(reductionTimeMinutes);
     fox = new ArrayList<>();
+    name = "pizza";
   }
 }

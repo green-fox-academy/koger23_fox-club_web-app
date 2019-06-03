@@ -25,5 +25,6 @@ public class Drink extends Nutrition {
     super(Type.DRINK);
     setReductionTimeMinutes(reductionTimeMinutes);
     fox = new ArrayList<>();
+    name = "beer";
   }
 }
