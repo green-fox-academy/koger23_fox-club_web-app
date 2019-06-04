@@ -22,6 +22,7 @@ public class User {
   private String passwordHash;
   @OneToMany(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
   private List<Long> foxList;
+  private String registrationDayString;
 
   public User() {
     foxList = new ArrayList<>();
