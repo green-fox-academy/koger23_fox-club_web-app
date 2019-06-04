@@ -3,6 +3,7 @@ package com.gfa.programmersfoxclub.model.character;
 
 import com.gfa.programmersfoxclub.model.nutrition.Drink;
 import com.gfa.programmersfoxclub.model.nutrition.Food;
+import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 import com.gfa.programmersfoxclub.model.trick.Trick;
 import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.utils.date.DateUtils;
@@ -160,5 +161,12 @@ public class Fox {
 
   public void setOwner(User owner) {
     this.owner = owner;
+  }
+
+  public List<Nutrition> getNutritions() {
+    List<Nutrition> nutritionList = new ArrayList<>();
+    nutritionList.add(this.drink);
+    nutritionList.add(this.food);
+    return nutritionList;
   }
 }
