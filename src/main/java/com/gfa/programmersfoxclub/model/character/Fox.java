@@ -5,6 +5,7 @@ import com.gfa.programmersfoxclub.model.nutrition.Drink;
 import com.gfa.programmersfoxclub.model.nutrition.Food;
 import com.gfa.programmersfoxclub.model.trick.Trick;
 import com.gfa.programmersfoxclub.model.user.User;
+import com.gfa.programmersfoxclub.utils.date.DateUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class Fox {
   private User owner;
 
   public Fox() {
+    this.birthDayString = DateUtils.getStringDateTime();
+    this.birthDateInMinutes = DateUtils.getCurrentDateTimeInMinutes();
     trick_list = new ArrayList<>();
   }
 
