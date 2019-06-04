@@ -3,6 +3,7 @@ package com.gfa.programmersfoxclub.service;
 import com.gfa.programmersfoxclub.model.Validation;
 import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.repository.UserRepository;
+import com.gfa.programmersfoxclub.utils.date.DateUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +65,7 @@ public class UserServiceImp implements IUserService {
   public User createUser(String username, String password, String email) {
     User newUser = new User(username, password, email);
     newUser.setPasswordHash(passwordEncoder.encode(password));
+    newUser.setRegistrationDayString(DateUtils.getStringDateTime());
     userRepository.save(newUser);
     User userFromDb = userRepository.findByUsername(newUser.getUsername());
     logInUser(userFromDb);
