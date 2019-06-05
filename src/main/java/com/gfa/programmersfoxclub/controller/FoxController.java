@@ -9,11 +9,13 @@ import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import com.gfa.programmersfoxclub.repository.TrickRepository;
 import com.gfa.programmersfoxclub.service.IFoxService;
+import com.gfa.programmersfoxclub.service.ISessionService;
 import com.gfa.programmersfoxclub.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class FoxController {
@@ -21,12 +23,14 @@ public class FoxController {
   private IUserService userService;
   private NutritionRepository nutritionRepository;
   private TrickRepository trickRepository;
+  private ISessionService sessionService;
 
-  public FoxController(IFoxService foxService, IUserService userService, NutritionRepository nutritionRepository, TrickRepository trickRepository) {
+  public FoxController(IFoxService foxService, IUserService userService, NutritionRepository nutritionRepository, TrickRepository trickRepository, ISessionService sessionService) {
     this.foxService = foxService;
     this.userService = userService;
     this.nutritionRepository = nutritionRepository;
     this.trickRepository = trickRepository;
+    this.sessionService = sessionService;
   }
 
   @GetMapping("/create_fox")
@@ -60,6 +64,27 @@ public class FoxController {
     foxService.save(fox);
     model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
     model.addAttribute("user", userService.getLoggedInUser());
+    sessionService.updateFoxAndNutrition();
     return "index";
+  }
+
+  @GetMapping("/nutritionstore")
+  public String nutritionStore(Model model) {
+    User user = userService.getLoggedInUser();
+    if(user == null) {
+      return "redirect:/login";
+    }
+    model.addAttribute("activeFoxIndex", foxService.findFoxByOwner(userService.getLoggedInUser()).getId());
+    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    return "nutritionstore";
+  }
+
+  @PostMapping("/nutritionsave")
+  public String saveNutritions(Model model, @RequestParam("food") String food,
+                               @RequestParam("drink") String drink) {
+//    sessionService.saveNutrition(food, drink);
+    model.addAttribute("activeFoxIndex", foxService.findFoxByOwner(userService.getLoggedInUser()).getId());
+    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    return "redirect:/";
   }
 }
