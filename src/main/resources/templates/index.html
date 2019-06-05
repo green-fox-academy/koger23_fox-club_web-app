@@ -34,12 +34,13 @@
             </ul>
         </div>
         <h1>Action history</h1>
-<!--        <div class="actionlist">-->
-<!--            <ul th:if="${actionHistoryLogger.actionList.size()} != 0" th:each="action : ${actionHistoryLogger.getLastFiveAction()}">-->
-<!--                <li th:text="${action}"></li>-->
-<!--            </ul>-->
-<!--            <span th:unless="${actionHistoryLogger.actionList.size()} != 0">No actions so far.</span>-->
-<!--        </div>-->
+        <div class="actionlist">
+            <p th:if="${fox.trick_list.size()} == null">No tricks.</p>
+            <ul th:if="${actionHistoryLogger.actionList.size()} != 0 and ${actionHistoryLogger.actionList} != null" th:each="action : ${actionHistoryLogger.getLastFiveAction()}">
+                <li th:text="${action}"></li>
+            </ul>
+            <span th:unless="${actionHistoryLogger.actionList.size()} != 0">No actions so far.</span>
+        </div>
     </div>
 </body>
 </html>
