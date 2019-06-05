@@ -20,6 +20,7 @@ public abstract class Nutrition {
   private int reductionTimeMinutes;
   private int hungerReductionPoints;
   private int thirstReductionPoints;
+  private String name;
 
   public Nutrition(Type type) {
     this.type = type;
