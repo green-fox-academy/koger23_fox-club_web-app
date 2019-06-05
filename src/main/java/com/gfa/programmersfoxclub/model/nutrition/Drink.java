@@ -16,7 +16,6 @@ public class Drink extends Nutrition {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  private String name;
   private final int reductionTimeMinutes = 2;
   @OneToMany(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "drink")
   private List<Fox> fox;
@@ -25,6 +24,13 @@ public class Drink extends Nutrition {
     super(Type.DRINK);
     setReductionTimeMinutes(reductionTimeMinutes);
     fox = new ArrayList<>();
-    name = "beer";
+    setName("beer");
+  }
+
+  public Drink(String name) {
+    super(Type.DRINK);
+    setReductionTimeMinutes(reductionTimeMinutes);
+    fox = new ArrayList<>();
+    setName(name);
   }
 }
