@@ -9,14 +9,10 @@
     <div th:replace="fragments/navigation :: copy"></div>
     <div class="content">
         <div class="select-menu">
-            <form th:class="${fox.color}" th:action="@{/tricksave}" th:method="post">
+            <form th:class="${fox.color}" th:action="@{/tricksave}" th:method="post" >
                     <label for="trick">Trick</label>
                     <select id="trick" name="trick" class="select-menu">
-                        <option value="Killing birds while sleeping">Killing birds while sleeping</option>
-                        <option value="Fly">Fly</option>
-                        <option value="Make deads alive">Make deads alive</option>
-                        <option value="Coding instead of you">Coding instead of you</option>
-                        <option value="Speak Chinese">Speak Chinese</option>
+                        <option th:each="trick : ${tricklist}"  th:value="|${trick.id}|" th:utext="|${trick.name}|"></option>
                     </select>
                     <button th:type="submit">Learn</button>
             </form>
