@@ -26,32 +26,34 @@ public class NutritionServiceImp implements INutritionService {
     long drinkDelta = currentMinutes - lastDrinkMinutes;
     boolean foodUpdateAble = false;
     boolean drinkUpdateAble = false;
-    for (Nutrition nutrition : foxNutritionList) {
-      switch (nutrition.getType()) {
-        case FOOD:
-          double elapsedFood = foodDelta / nutrition.getReductionTimeMinutes();
-          if (elapsedFood >= 1) {
-            foodUpdateAble = true;
-          }
-          if (lastFoodMinutes != 0 && foodUpdateAble) {
-            for (int i = 0; i < elapsedFood; i++) {
-              checkLevels(fox, nutrition);
+    if (fox.getNutritions().size() > 0) {
+      for (Nutrition nutrition : foxNutritionList) {
+        switch (nutrition.getType()) {
+          case FOOD:
+            double elapsedFood = foodDelta / nutrition.getReductionTimeMinutes();
+            if (elapsedFood >= 1) {
+              foodUpdateAble = true;
             }
-            lastFoodMinutes = currentMinutes;
-            foodUpdateAble = false;
-          }
-        case DRINK:
-          double elapsedDrink = drinkDelta / nutrition.getReductionTimeMinutes();
-          if (elapsedDrink >= 1) {
-            drinkUpdateAble = true;
-          }
-          if (lastDrinkMinutes != 0 && drinkUpdateAble) {
-            for (int i = 0; i < elapsedDrink; i++) {
-              checkLevels(fox, nutrition);
+            if (lastFoodMinutes != 0 && foodUpdateAble) {
+              for (int i = 0; i < elapsedFood; i++) {
+                checkLevels(fox, nutrition);
+              }
+              lastFoodMinutes = currentMinutes;
+              foodUpdateAble = false;
             }
-            lastDrinkMinutes = currentMinutes;
-            drinkUpdateAble = false;
-          }
+          case DRINK:
+            double elapsedDrink = drinkDelta / nutrition.getReductionTimeMinutes();
+            if (elapsedDrink >= 1) {
+              drinkUpdateAble = true;
+            }
+            if (lastDrinkMinutes != 0 && drinkUpdateAble) {
+              for (int i = 0; i < elapsedDrink; i++) {
+                checkLevels(fox, nutrition);
+              }
+              lastDrinkMinutes = currentMinutes;
+              drinkUpdateAble = false;
+            }
+        }
       }
     }
   }
