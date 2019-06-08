@@ -16,4 +16,6 @@ public interface INutritionService {
   void reduceFoxHealth(Fox fox);
 
   void feed(Fox fox, Nutrition nutrition);
+
+  void saveNutritionIfNotExists(Nutrition nutrition);
 }

@@ -1,7 +1,10 @@
 package com.gfa.programmersfoxclub.service;
 
 import com.gfa.programmersfoxclub.model.character.Fox;
+import com.gfa.programmersfoxclub.model.nutrition.Drink;
+import com.gfa.programmersfoxclub.model.nutrition.Food;
 import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
+import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import com.gfa.programmersfoxclub.utils.date.DateUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +15,13 @@ public class NutritionServiceImp implements INutritionService {
   private long startMinutes;
   private long lastFoodMinutes;
   private long lastDrinkMinutes;
+  private NutritionRepository nutritionRepository;
 
-  public NutritionServiceImp() {
+  public NutritionServiceImp(NutritionRepository nutritionRepository) {
     this.startMinutes = DateUtils.getCurrentDateTimeInMinutes();
     this.lastFoodMinutes = startMinutes;
     this.lastDrinkMinutes = startMinutes;
+    this.nutritionRepository = nutritionRepository;
   }
 
   public void reduceNutritionLevel(Fox fox) {
@@ -109,5 +114,11 @@ public class NutritionServiceImp implements INutritionService {
       fox.setThirstLevel(nutrition.getThirstReductionPoints());
     }
     startMinutes = DateUtils.getCurrentDateTimeInMinutes();
+  }
+
+  public void saveNutritionIfNotExists(Nutrition nutrition) {
+    if (!nutritionRepository.findByNameIsNotLike(nutrition.getName())) {
+      nutritionRepository.save(nutrition);
+    }
   }
 }
