@@ -3,6 +3,8 @@ package com.gfa.programmersfoxclub.controller;
 import com.gfa.programmersfoxclub.model.Validation;
 import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.service.IFoxService;
+import com.gfa.programmersfoxclub.service.ILogger;
+import com.gfa.programmersfoxclub.service.ISessionService;
 import com.gfa.programmersfoxclub.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
   private final IUserService userService;
   private final IFoxService foxService;
+  private ILogger logger;
+  private ISessionService sessionService;
 
-  public LoginController(IUserService userService, IFoxService foxService) {
+  public LoginController(IUserService userService, IFoxService foxService, ILogger logger, ISessionService sessionService) {
     this.userService = userService;
     this.foxService = foxService;
+    this.logger = logger;
+    this.sessionService = sessionService;
   }
 
   @GetMapping("/login")
@@ -32,6 +38,9 @@ public class LoginController {
     if (validation.isPasswordOK() && validation.isUsernameOK()) {
       model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
       model.addAttribute("user", userService.getLoggedInUser());
+      model.addAttribute("actionHistoryLogger", logger);
+      logger.saveLoginAction();
+      sessionService.updateFoxAndNutrition();
       return "redirect:/";
     }
     model.addAttribute("user", new User());
