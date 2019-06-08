@@ -10,6 +10,8 @@ public interface IFoxService {
 
   List<Fox> findAll();
 
+  Fox getActiveFox(int activeFoxIndex);
+
   Fox findById(long id);
 
   void save(Fox fox);

@@ -28,6 +28,12 @@ public class FoxServiceImp implements IFoxService {
   }
 
   @Override
+  public Fox getActiveFox(int activeFoxIndex) {
+    List<Fox> foxList = findAll();
+    return foxList.get(activeFoxIndex);
+  }
+
+  @Override
   public Fox findById(long id) {
     return foxRepository.findById(id).get();
   }
