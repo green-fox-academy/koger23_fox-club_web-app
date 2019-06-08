@@ -23,6 +23,7 @@ public class User {
   @OneToMany(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
   private List<Long> foxList;
   private String registrationDayString;
+  private int activeFoxIndex;
 
   public User() {
     foxList = new ArrayList<>();
@@ -33,6 +34,7 @@ public class User {
     this.password = password;
     foxList = new ArrayList<>();
   }
+
   public User(String username, String password, String email) {
     this.username = username;
     this.password = password;
