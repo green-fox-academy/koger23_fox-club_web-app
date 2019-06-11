@@ -36,12 +36,12 @@ public class LoginController {
   public String loginUser(Model model, User user, RedirectAttributes attributes) {
     Validation validation = userService.validateAndLoginUser(user, new Validation());
     if (validation.isPasswordOK() && validation.isUsernameOK()) {
-      model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
-      model.addAttribute("user", userService.getLoggedInUser());
+      User loggedInUser = userService.getLoggedInUser();
+      model.addAttribute("user", loggedInUser);
       model.addAttribute("actionHistoryLogger", logger);
       logger.saveLoginAction();
-      sessionService.updateFoxAndNutrition();
-      return "redirect:/";
+      model.addAttribute("foxlist", loggedInUser.getFoxList());
+      return "redirect:/fox/select";
     }
     model.addAttribute("user", new User());
     attributes.addFlashAttribute("validation", validation);
