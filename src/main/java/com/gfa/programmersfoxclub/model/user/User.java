@@ -21,7 +21,7 @@ public class User {
   private String password;
   private String passwordHash;
   @OneToMany(targetEntity = Fox.class, fetch = FetchType.EAGER, mappedBy = "owner")
-  private List<Long> foxList;
+  private List<Fox> foxList;
   private String registrationDayString;
   private int activeFoxIndex;
 
