@@ -25,6 +25,8 @@ public abstract class Nutrition {
   public Nutrition(Type type) {
     this.type = type;
     this.level = MAX_LEVEL;
+    hungerReductionPoints = 0;
+    thirstReductionPoints = 0;
   }
 
   public enum Type {
