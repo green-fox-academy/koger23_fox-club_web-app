@@ -35,13 +35,13 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public String renderIndex(Model model) {
+  public String renderIndex(Model model ) {
     User user = userService.getLoggedInUser();
     if(user == null) {
       return "redirect:/login";
     }
-    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
-    model.addAttribute("user", userService.getLoggedInUser());
+    model.addAttribute("fox", user.getFoxList().get(user.getActiveFoxIndex()));
+    model.addAttribute("user", user);
     model.addAttribute("actionHistoryLogger", logger);
     sessionService.updateFoxAndNutrition();
     return "index";
@@ -52,8 +52,7 @@ public class HomeController {
     if (userService.getLoggedInUser() == null) {
       return "redirect:/login";
     }
-    model.addAttribute("activeFoxIndex", foxService.findFoxByOwner(userService.getLoggedInUser()).getId());
-    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
     model.addAttribute("actionHistoryLogger", logger);
     return "actionhistory";
   }
@@ -63,19 +62,17 @@ public class HomeController {
     if (userService.getLoggedInUser() == null) {
       return "redirect:/login";
     }
-    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
-    model.addAttribute("activeFoxIndex", foxService.findFoxByOwner(userService.getLoggedInUser()).getId());
+    model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
     model.addAttribute("tricklist", trickRepository.findAll());
     return "trickcenter";
   }
 
   @PostMapping("/tricksave")
   public String saveTrick(Model model, @RequestParam("trick") Trick trick) {
-    Fox fox = foxService.findFoxByOwner(userService.getLoggedInUser());
+    Fox fox = userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex());
     fox.getTrick_list().add(trick);
     logger.saveTrickAction(trick.getName());
     foxService.save(fox);
-    model.addAttribute("activeFoxIndex", fox.getId());
     model.addAttribute("fox", fox);
     return "redirect:/";
   }
