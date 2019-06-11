@@ -9,7 +9,7 @@
     <div th:replace="fragments/navigation :: copy"></div>
     <div class="content">
         <div th:class="|select-menu ${fox.color}|">
-            <form th:class="${fox.color}" th:action="@{/nutritionsave}" th:method="post">
+            <form th:class="${fox.color}" th:action="@{/fox/nutritionsave}" th:method="post">
                     <label for="food">Food</label>
                     <select id="food" name="food" class="select-menu">
                         <option th:each="food : ${foodList}"  th:value="|${food.id}|" th:utext="|${food.name}|"></option>
