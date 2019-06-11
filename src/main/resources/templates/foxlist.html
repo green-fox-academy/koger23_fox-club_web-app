@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fox List</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/fox/select}">
+        <h3>Select Fox:</h3>
+        <span th:if="${foxlist.size()} > 0" th:each="fox : ${foxlist}">
+            <input type="radio" name="activefox" th:text="${fox.name} + ' (HP: ' + ${fox.healthPoints} + '%)'" th:value="${foxStat.count}"><br>
+        </span>
+        <button th:if="${foxlist.size()} > 0" type="submit">Select</button>
+    </form>
+    <span th:unless="${foxlist.size()} > 0">
+            <p>No foxes. Create one!</p>
+        </span>
+    <a href="/create_fox">Create new Fox</a>
+</body>
+</html>
