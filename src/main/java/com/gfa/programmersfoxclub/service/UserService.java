@@ -3,7 +3,7 @@ package com.gfa.programmersfoxclub.service;
 import com.gfa.programmersfoxclub.model.Validation;
 import com.gfa.programmersfoxclub.model.user.User;
 
-public interface IUserService {
+public interface UserService {
   User getLoggedInUser();
   void logout();
   boolean validateAndLoginUser(User user);

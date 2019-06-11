@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @Setter
 @Getter
-public class FoxServiceImp implements IFoxService {
+public class FoxServiceImp implements FoxService {
   private IFoxRepository foxRepository;
 
   public FoxServiceImp(IFoxRepository foxRepository) {

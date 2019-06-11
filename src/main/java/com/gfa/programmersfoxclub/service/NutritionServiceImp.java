@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NutritionServiceImp implements INutritionService {
+public class NutritionServiceImp implements NutritionService {
   private long startMinutes;
   private long lastFoodMinutes;
   private long lastDrinkMinutes;

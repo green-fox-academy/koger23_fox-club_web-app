@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LoggerImp implements ILogger {
+public class LoggerImp implements Logger {
   private List<String> actionList = new ArrayList<>();
   private List<String> lastFiveActionList = new ArrayList<>();
 

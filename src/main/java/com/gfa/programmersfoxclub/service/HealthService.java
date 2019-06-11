@@ -2,7 +2,7 @@ package com.gfa.programmersfoxclub.service;
 
 import com.gfa.programmersfoxclub.model.character.Fox;
 
-public interface IHealthService {
+public interface HealthService {
   void healTotally(Fox fox);
 
   void heal(Fox fox, int healBy);

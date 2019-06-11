@@ -6,7 +6,7 @@ import com.gfa.programmersfoxclub.model.user.User;
 
 import java.util.List;
 
-public interface IFoxService {
+public interface FoxService {
 
   List<Fox> findAll();
 

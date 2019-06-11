@@ -9,9 +9,9 @@ import com.gfa.programmersfoxclub.model.trick.Trick;
 import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import com.gfa.programmersfoxclub.repository.TrickRepository;
-import com.gfa.programmersfoxclub.service.IFoxService;
-import com.gfa.programmersfoxclub.service.ISessionService;
-import com.gfa.programmersfoxclub.service.IUserService;
+import com.gfa.programmersfoxclub.service.FoxService;
+import com.gfa.programmersfoxclub.service.SessionService;
+import com.gfa.programmersfoxclub.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/fox")
 public class FoxController {
-  private IFoxService foxService;
-  private IUserService userService;
+  private FoxService foxService;
+  private UserService userService;
   private NutritionRepository nutritionRepository;
   private TrickRepository trickRepository;
-  private ISessionService sessionService;
+  private SessionService sessionService;
 
-  public FoxController(IFoxService foxService, IUserService userService, NutritionRepository nutritionRepository, TrickRepository trickRepository, ISessionService sessionService) {
+  public FoxController(FoxService foxService, UserService userService, NutritionRepository nutritionRepository, TrickRepository trickRepository, SessionService sessionService) {
     this.foxService = foxService;
     this.userService = userService;
     this.nutritionRepository = nutritionRepository;

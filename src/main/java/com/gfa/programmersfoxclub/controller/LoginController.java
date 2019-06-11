@@ -2,10 +2,10 @@ package com.gfa.programmersfoxclub.controller;
 
 import com.gfa.programmersfoxclub.model.Validation;
 import com.gfa.programmersfoxclub.model.user.User;
-import com.gfa.programmersfoxclub.service.IFoxService;
-import com.gfa.programmersfoxclub.service.ILogger;
-import com.gfa.programmersfoxclub.service.ISessionService;
-import com.gfa.programmersfoxclub.service.IUserService;
+import com.gfa.programmersfoxclub.service.FoxService;
+import com.gfa.programmersfoxclub.service.Logger;
+import com.gfa.programmersfoxclub.service.SessionService;
+import com.gfa.programmersfoxclub.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +14,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class LoginController {
-  private final IUserService userService;
-  private final IFoxService foxService;
-  private ILogger logger;
-  private ISessionService sessionService;
+  private final UserService userService;
+  private final FoxService foxService;
+  private Logger logger;
+  private SessionService sessionService;
 
-  public LoginController(IUserService userService, IFoxService foxService, ILogger logger, ISessionService sessionService) {
+  public LoginController(UserService userService, FoxService foxService, Logger logger, SessionService sessionService) {
     this.userService = userService;
     this.foxService = foxService;
     this.logger = logger;

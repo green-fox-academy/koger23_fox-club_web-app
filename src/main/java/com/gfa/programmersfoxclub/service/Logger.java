@@ -4,7 +4,7 @@ import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 
 import java.util.List;
 
-public interface ILogger {
+public interface Logger {
   List<String> getLastFiveActionList();
 
   void setLastFiveActionList(List<String> lastFiveActionList);

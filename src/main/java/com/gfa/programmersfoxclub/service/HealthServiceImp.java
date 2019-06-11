@@ -4,7 +4,7 @@ import com.gfa.programmersfoxclub.model.character.Fox;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HealthServiceImp implements IHealthService {
+public class HealthServiceImp implements HealthService {
   public void healTotally(Fox fox) {
     fox.setHealthPoints(fox.getMAX_HEALTH());
   }

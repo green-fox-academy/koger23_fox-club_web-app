@@ -4,7 +4,7 @@ import com.gfa.programmersfoxclub.model.character.Fox;
 import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 
 
-public interface INutritionService {
+public interface NutritionService {
   void reduceNutritionLevel(Fox fox);
 
   void checkLevels(Fox fox, Nutrition nutrition);

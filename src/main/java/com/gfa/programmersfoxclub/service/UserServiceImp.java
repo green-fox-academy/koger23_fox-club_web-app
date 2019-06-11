@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 
 @Service
-public class UserServiceImp implements IUserService {
+public class UserServiceImp implements UserService {
 
   private final HttpSession session;
   private static final String sessionKey = "user";

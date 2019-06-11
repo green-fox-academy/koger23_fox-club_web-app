@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SessionServiceImp implements ISessionService {
-  private ILogger logger;
-  private INutritionService nutritionService;
-  private IFoxService foxService;
-  private IUserService userService;
+public class SessionServiceImp implements SessionService {
+  private Logger logger;
+  private NutritionService nutritionService;
+  private FoxService foxService;
+  private UserService userService;
   private NutritionRepository nutritionRepository;
 
-  public SessionServiceImp(ILogger logger, INutritionService nutritionService, IFoxService foxService, IUserService userService, NutritionRepository nutritionRepository) {
+  public SessionServiceImp(Logger logger, NutritionService nutritionService, FoxService foxService, UserService userService, NutritionRepository nutritionRepository) {
     this.logger = logger;
     this.nutritionService = nutritionService;
     this.foxService = foxService;
@@ -45,6 +45,7 @@ public class SessionServiceImp implements ISessionService {
     for (Fox fox : foxList) {
       if (fox.isAlive()) {
         nutritionService.reduceNutritionLevel(fox);
+        foxService.update(fox);
       }
     }
   }

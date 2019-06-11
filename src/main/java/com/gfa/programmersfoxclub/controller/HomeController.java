@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Getter
 @Setter
 public class HomeController {
-  private IFoxService foxService;
-  private IUserService userService;
-  private ILogger logger;
-  private ISessionService sessionService;
-  private ITrickService trickRepository;
-  private INutritionService nutritionService;
+  private FoxService foxService;
+  private UserService userService;
+  private Logger logger;
+  private SessionService sessionService;
+  private TrickService trickRepository;
+  private NutritionService nutritionService;
 
-  public HomeController(IFoxService foxService, IUserService userService, ILogger logger, ISessionService sessionService, ITrickService trickRepository, INutritionService nutritionService) {
+  public HomeController(FoxService foxService, UserService userService, Logger logger, SessionService sessionService, TrickService trickRepository, NutritionService nutritionService) {
     this.foxService = foxService;
     this.userService = userService;
     this.logger = logger;

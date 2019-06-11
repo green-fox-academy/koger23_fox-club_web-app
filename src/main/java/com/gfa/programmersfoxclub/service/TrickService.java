@@ -4,6 +4,6 @@ import com.gfa.programmersfoxclub.model.trick.Trick;
 
 import java.util.List;
 
-public interface ITrickService {
+public interface TrickService {
   List<Trick> findAll();
 }

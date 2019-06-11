@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TrickServiceImp implements ITrickService {
+public class TrickServiceImp implements TrickService {
   private TrickRepository trickRepository;
 
   public TrickServiceImp(TrickRepository trickRepository) {
