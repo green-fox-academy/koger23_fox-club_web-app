@@ -4,6 +4,7 @@ package com.gfa.programmersfoxclub.controller;
 import com.gfa.programmersfoxclub.model.character.Fox;
 import com.gfa.programmersfoxclub.model.nutrition.Drink;
 import com.gfa.programmersfoxclub.model.nutrition.Food;
+import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 import com.gfa.programmersfoxclub.model.trick.Trick;
 import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/fox")
@@ -79,9 +82,15 @@ public class FoxController {
     if(user == null) {
       return "redirect:/login";
     }
+    List<Nutrition> nutritionList = new ArrayList<>();
+    nutritionRepository.findAll().forEach(nutritionList::add);
     model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
-    model.addAttribute("foodList", nutritionRepository.findAllFood());
-    model.addAttribute("drinkList", nutritionRepository.findAllDrink());
+    model.addAttribute("foodList", nutritionList.stream()
+            .filter(nutrition -> nutrition instanceof Food)
+            .collect(Collectors.toList()));
+    model.addAttribute("drinkList", nutritionList.stream()
+            .filter(nutrition -> nutrition instanceof Drink)
+            .collect(Collectors.toList()));
     return "nutritionstore";
   }
 
