@@ -14,7 +14,7 @@
         <span class="usernametip"><p>(min. 3 characters long, max. 15. Contains letters, numbers and _)</p></span>
     </div>
     <div class="form">
-        <form th:class="${fox.color}" th:method="post" th:object="${fox}" action="/create_fox">
+        <form th:class="${fox.color}" th:method="post" th:object="${fox}" action="/fox/create">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" th:field="*{name}" pattern="^[A-Za-z0-9_]{1,32}$" required autofocus minlength="3" maxlength="15"/>
             <label for="color">Color</label>
