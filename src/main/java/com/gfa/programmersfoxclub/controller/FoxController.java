@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class FoxController {
   private IFoxService foxService;
@@ -62,10 +64,10 @@ public class FoxController {
     fox.getTrick_list().add(default_trick);
 
     foxService.save(fox);
-    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
-    model.addAttribute("user", userService.getLoggedInUser());
-    sessionService.updateFoxAndNutrition();
-    return "index";
+    userService.updateUsersActiveFoxIndex(userService.getLoggedInUser().getFoxList().size() - 1);
+    model.addAttribute(fox);
+    model.addAttribute("user", user);
+    return "redirect:/";
   }
 
   @GetMapping("/nutritionstore")
@@ -74,17 +76,28 @@ public class FoxController {
     if(user == null) {
       return "redirect:/login";
     }
-    model.addAttribute("activeFoxIndex", foxService.findFoxByOwner(userService.getLoggedInUser()).getId());
-    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
     return "nutritionstore";
   }
 
   @PostMapping("/nutritionsave")
   public String saveNutritions(Model model, @RequestParam("food") String food,
                                @RequestParam("drink") String drink) {
-//    sessionService.saveNutrition(food, drink);
-    model.addAttribute("activeFoxIndex", foxService.findFoxByOwner(userService.getLoggedInUser()).getId());
-    model.addAttribute("fox", foxService.findFoxByOwner(userService.getLoggedInUser()));
+    sessionService.saveNutrition(food, drink);
+    model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
+    return "redirect:/";
+  }
+
+  @GetMapping("/fox/select")
+  public String renderFoxList(Model model) {
+    List<Fox> foxList = userService.getLoggedInUser().getFoxList();
+    model.addAttribute("foxlist", foxList);
+    return "foxlist";
+  }
+  @PostMapping("/fox/select")
+  public String setActiveFox(@RequestParam("activefox") int activefox) {
+    User user = userService.getLoggedInUser();
+    userService.updateUsersActiveFoxIndex(activefox - 1);
     return "redirect:/";
   }
 }
