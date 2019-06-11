@@ -1,8 +1,6 @@
 package com.gfa.programmersfoxclub.service;
 
 import com.gfa.programmersfoxclub.model.character.Fox;
-import com.gfa.programmersfoxclub.model.nutrition.Drink;
-import com.gfa.programmersfoxclub.model.nutrition.Food;
 import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import com.gfa.programmersfoxclub.utils.date.DateUtils;
