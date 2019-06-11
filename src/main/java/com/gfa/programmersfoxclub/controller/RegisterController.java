@@ -31,6 +31,6 @@ public class RegisterController {
     model.addAttribute("user", userService.getLoggedInUser());
     model.addAttribute("actionHistoryLogger", logger);
     logger.saveLoginAction();
-    return "/create_fox";
+    return "redirect:/fox/create";
   }
 }
