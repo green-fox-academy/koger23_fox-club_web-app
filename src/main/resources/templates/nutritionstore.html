@@ -12,11 +12,11 @@
             <form th:class="${fox.color}" th:action="@{/fox/nutritionsave}" th:method="post">
                     <label for="food">Food</label>
                     <select id="food" name="food" class="select-menu">
-                        <option th:each="food : ${foodList}"  th:value="|${food.id}|" th:utext="|${food.name}|"></option>
+                        <option th:each="food : ${foodList}"  th:value="|${food.name}|" th:utext="|${food.name}|"></option>
                     </select>
                     <label for="drink">Drink</label>
                     <select id="drink" name="drink" class="select-menu">
-                        <option th:each="drink : ${drinkList}"  th:value="|${drink.id}|" th:utext="|${drink.name}|"></option>
+                        <option th:each="drink : ${drinkList}"  th:value="|${drink.name}|" th:utext="|${drink.name}|"></option>
                     </select>
                     <button th:type="submit">Change</button>
             </form>
