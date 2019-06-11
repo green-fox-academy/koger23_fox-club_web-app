@@ -20,12 +20,12 @@ public class Fox {
   private final int MAX_HEALTH = 100;
   private String name = "";
   private int healthPoints = 100;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   private Food food;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   private Drink drink;
   private String color = "green";
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinTable(
           name = "fox_trick",
           joinColumns = {@JoinColumn(name = "fox_id")},
