@@ -3,6 +3,8 @@ package com.gfa.programmersfoxclub.service;
 import com.gfa.programmersfoxclub.model.character.Fox;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SessionServiceImp implements ISessionService {
   private ILogger logger;
@@ -20,19 +22,18 @@ public class SessionServiceImp implements ISessionService {
   public void saveNutrition(String food, String drink) {
     String foodBefore = foxService.findFoxByOwner(userService.getLoggedInUser()).getFood().getName();
     String drinkBefore = foxService.findFoxByOwner(userService.getLoggedInUser()).getDrink().getName();
-
     foxService.findFoxByOwner(userService.getLoggedInUser()).getFood().setName(food.toLowerCase());
     logger.saveNutritionChange(foxService.findFoxByOwner(userService.getLoggedInUser()).getFood(), foodBefore, foxService.findFoxByOwner(userService.getLoggedInUser()).getFood().getName());
-
     foxService.findFoxByOwner(userService.getLoggedInUser()).getDrink().setName(drink.toLowerCase());
     logger.saveNutritionChange(foxService.findFoxByOwner(userService.getLoggedInUser()).getDrink(), drinkBefore, foxService.findFoxByOwner(userService.getLoggedInUser()).getDrink().getName());
   }
 
   public void updateFoxAndNutrition() {
-    Fox fox = foxService.findFoxByOwner(userService.getLoggedInUser());
-
-    if (fox.isAlive()) {
-      nutritionService.reduceNutritionLevel(fox);
+    List<Fox> foxList = foxService.findAll();
+    for (Fox fox : foxList) {
+      if (fox.isAlive()) {
+        nutritionService.reduceNutritionLevel(fox);
+      }
     }
   }
 }
