@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Controller
 @Getter
@@ -39,9 +35,9 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public String renderIndex(Model model ) {
+  public String renderIndex(Model model) {
     User user = userService.getLoggedInUser();
-    if(user == null) {
+    if (user == null) {
       return "redirect:/login";
     }
     model.addAttribute("fox", user.getFoxList().get(user.getActiveFoxIndex()));
