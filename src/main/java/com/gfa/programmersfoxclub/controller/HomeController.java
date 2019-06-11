@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Controller
 @Getter
@@ -62,7 +66,8 @@ public class HomeController {
     if (userService.getLoggedInUser() == null) {
       return "redirect:/login";
     }
-    model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
+    Fox activeFox = userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex());
+    model.addAttribute("fox", activeFox);
     model.addAttribute("tricklist", trickRepository.findAll());
     return "trickcenter";
   }
@@ -70,9 +75,12 @@ public class HomeController {
   @PostMapping("/tricksave")
   public String saveTrick(Model model, @RequestParam("trick") Trick trick) {
     Fox fox = userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex());
-    fox.getTrick_list().add(trick);
-    logger.saveTrickAction(trick.getName());
-    foxService.save(fox);
+    if (fox.getTrick_list().stream()
+            .filter(trick1 -> trick1.getName().equals(trick.getName())).count() == 0) {
+      fox.getTrick_list().add(trick);
+      logger.saveTrickAction(trick.getName());
+      foxService.save(fox);
+    }
     model.addAttribute("fox", fox);
     return "redirect:/";
   }
