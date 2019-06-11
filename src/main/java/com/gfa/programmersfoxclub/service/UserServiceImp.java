@@ -77,4 +77,16 @@ public class UserServiceImp implements IUserService {
     User userFromDb = userRepository.findByUsername(user.getUsername());
     session.setAttribute(sessionKey, userFromDb);
   }
+
+  @Override
+  public void updateUsersActiveFoxIndex(int activeFoxIndex) {
+    User user = getLoggedInUser();
+    User userToUpdate = userRepository.findByUsername(user.getUsername());
+    userToUpdate.setActiveFoxIndex(activeFoxIndex);
+    userRepository.save(userToUpdate);
+  }
+
+  public User findByUsername(String name) {
+    return userRepository.findByUsername(name);
+  }
 }

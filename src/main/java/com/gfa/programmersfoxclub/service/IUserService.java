@@ -10,4 +10,8 @@ public interface IUserService {
   Validation validateAndLoginUser(User user, Validation validation);
   User createUser(String username, String password, String email);
   void logInUser(User user);
+
+  void updateUsersActiveFoxIndex(int activeFoxIndex);
+
+  User findByUsername(String name);
 }
