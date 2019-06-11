@@ -43,7 +43,7 @@ public class FoxController {
   @GetMapping("/create")
   public String renderCreateFox(Model model) {
     User user = userService.getLoggedInUser();
-    if(user == null) {
+    if (user == null) {
       return "redirect:/login";
     }
     model.addAttribute("fox", new Fox());
@@ -53,22 +53,17 @@ public class FoxController {
   @PostMapping("/create")
   public String createFox(Model model, Fox fox) {
     User user = userService.getLoggedInUser();
-    if(user == null) {
+    if (user == null) {
       return "redirect:/login";
     }
     fox.setOwner(user);
     user.getFoxList().add(fox);
     Food defaultFood = nutritionRepository.findFoodById(7L);
     Drink defaultDrink = nutritionRepository.findDrinkById(1L);
-    nutritionRepository.save(defaultFood);
-    nutritionRepository.save(defaultDrink);
+    Trick default_trick = trickRepository.findTrickById(1);
     fox.setFood(defaultFood);
     fox.setDrink(defaultDrink);
-
-    Trick default_trick = new Trick();
-    trickRepository.save(default_trick);
     fox.getTrick_list().add(default_trick);
-
     foxService.save(fox);
     userService.updateUsersActiveFoxIndex(userService.getLoggedInUser().getFoxList().size() - 1);
     model.addAttribute(fox);
@@ -79,7 +74,7 @@ public class FoxController {
   @GetMapping("/nutritionstore")
   public String nutritionStore(Model model) {
     User user = userService.getLoggedInUser();
-    if(user == null) {
+    if (user == null) {
       return "redirect:/login";
     }
     List<Nutrition> nutritionList = new ArrayList<>();
@@ -108,6 +103,7 @@ public class FoxController {
     model.addAttribute("foxlist", foxList);
     return "foxlist";
   }
+
   @PostMapping("/select")
   public String setActiveFox(@RequestParam("activefox") int activefox) {
     User user = userService.getLoggedInUser();
