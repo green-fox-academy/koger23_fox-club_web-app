@@ -40,7 +40,8 @@ public class HomeController {
     if (user == null) {
       return "redirect:/login";
     }
-    model.addAttribute("fox", user.getFoxList().get(user.getActiveFoxIndex()));
+    long activeFoxId = user.getFoxList().get(user.getActiveFoxIndex()).getId();
+    model.addAttribute("fox", foxService.findById(activeFoxId));
     model.addAttribute("user", user);
     model.addAttribute("actionHistoryLogger", logger);
     sessionService.updateFoxAndNutrition();
