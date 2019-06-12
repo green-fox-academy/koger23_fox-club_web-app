@@ -9,15 +9,14 @@ import com.gfa.programmersfoxclub.model.trick.Trick;
 import com.gfa.programmersfoxclub.model.user.User;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import com.gfa.programmersfoxclub.repository.TrickRepository;
-import com.gfa.programmersfoxclub.service.FoxService;
-import com.gfa.programmersfoxclub.service.SessionService;
-import com.gfa.programmersfoxclub.service.UserService;
+import com.gfa.programmersfoxclub.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +30,17 @@ public class FoxController {
   private NutritionRepository nutritionRepository;
   private TrickRepository trickRepository;
   private SessionService sessionService;
+  private NutritionService nutritionService;
+  private HealthService healthService;
 
-  public FoxController(FoxService foxService, UserService userService, NutritionRepository nutritionRepository, TrickRepository trickRepository, SessionService sessionService) {
+  public FoxController(FoxService foxService, UserService userService, NutritionRepository nutritionRepository, TrickRepository trickRepository, SessionService sessionService, NutritionService nutritionService, HealthService healthService) {
     this.foxService = foxService;
     this.userService = userService;
     this.nutritionRepository = nutritionRepository;
     this.trickRepository = trickRepository;
     this.sessionService = sessionService;
+    this.nutritionService = nutritionService;
+    this.healthService = healthService;
   }
 
   @GetMapping("/create")
@@ -91,14 +94,14 @@ public class FoxController {
 
   @PostMapping("/feed")
   public String updateFood(Model model, @RequestParam("food") String foodName) {
-    sessionService.saveNutrition(foodName);
+    nutritionService.saveNutrition(foodName);
     model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
     return "redirect:/";
   }
 
   @PostMapping("/drink")
   public String updateDrink(Model model, @RequestParam("drink") String drinkName) {
-    sessionService.saveNutrition(drinkName);
+    nutritionService.saveNutrition(drinkName);
     model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
     return "redirect:/";
   }
