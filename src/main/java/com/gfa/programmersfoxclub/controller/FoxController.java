@@ -116,4 +116,19 @@ public class FoxController {
     userService.updateUsersActiveFoxIndex(activefox - 1);
     return "redirect:/";
   }
+
+  @GetMapping("/heal")
+  public String healFox(RedirectAttributes redirectAttributes) {
+    Fox fox = foxService.findById(userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()).getId());
+    if (!healthService.heal(fox)) {
+      if (!fox.isAlive()) {
+        redirectAttributes.addFlashAttribute("healMessage", "Sorry, your fox is dead.");
+      } else if (fox.getHealthPoints() == fox.getMAX_HEALTH()) {
+        redirectAttributes.addFlashAttribute("healMessage", "You already healed him.");
+      } else {
+        redirectAttributes.addFlashAttribute("healMessage", "You cannot heal the fox! Check food / drink level.");
+      }
+    }
+    return "redirect:/";
+  }
 }
