@@ -10,54 +10,49 @@ import java.util.List;
 
 @Service
 public class NutritionServiceImp implements NutritionService {
-  private long startMinutes;
-  private long lastFoodMinutes;
-  private long lastDrinkMinutes;
   private NutritionRepository nutritionRepository;
+  private FoxService foxService;
 
-  public NutritionServiceImp(NutritionRepository nutritionRepository) {
-    this.startMinutes = DateUtils.getCurrentDateTimeInMinutes();
-    this.lastFoodMinutes = startMinutes;
-    this.lastDrinkMinutes = startMinutes;
+  public NutritionServiceImp(NutritionRepository nutritionRepository, FoxService foxService) {
     this.nutritionRepository = nutritionRepository;
+    this.foxService = foxService;
   }
 
   public void reduceNutritionLevel(Fox fox) {
     List<Nutrition> foxNutritionList = fox.getNutritions();
     long currentMinutes = DateUtils.getCurrentDateTimeInMinutes();
-    long foodDelta = currentMinutes - lastFoodMinutes;
-    long drinkDelta = currentMinutes - lastDrinkMinutes;
+    long foodDelta = currentMinutes - fox.getLastFeedInMinutes();
+    long drinkDelta = currentMinutes - fox.getLastDrinkInMinutes();
     boolean foodUpdateAble = false;
     boolean drinkUpdateAble = false;
-    if (fox.getNutritions().size() > 0) {
-      for (Nutrition nutrition : foxNutritionList) {
-        switch (nutrition.getType()) {
-          case FOOD:
-            double elapsedFood = foodDelta / nutrition.getReductionTimeMinutes();
-            if (elapsedFood >= 1) {
-              foodUpdateAble = true;
+    for (Nutrition nutrition : foxNutritionList) {
+      switch (nutrition.getType()) {
+        case FOOD:
+          double elapsedFood = foodDelta / nutrition.getReductionTimeMinutes();
+          if (elapsedFood >= 1) {
+            foodUpdateAble = true;
+          }
+          if (fox.getLastFeedInMinutes() != 0 && foodUpdateAble) {
+            for (int i = 0; i < elapsedFood; i++) {
+              checkLevels(fox, nutrition);
             }
-            if (lastFoodMinutes != 0 && foodUpdateAble) {
-              for (int i = 0; i < elapsedFood; i++) {
-                checkLevels(fox, nutrition);
-              }
-              lastFoodMinutes = currentMinutes;
-              foodUpdateAble = false;
+            fox.setLastFeedInMinutes(currentMinutes);
+            foodUpdateAble = false;
+          }
+        case DRINK:
+          double elapsedDrink = drinkDelta / nutrition.getReductionTimeMinutes();
+          if (elapsedDrink >= 1) {
+            drinkUpdateAble = true;
+          }
+          if (fox.getLastDrinkInMinutes() != 0 && drinkUpdateAble) {
+            for (int i = 0; i < elapsedDrink; i++) {
+              checkLevels(fox, nutrition);
             }
-          case DRINK:
-            double elapsedDrink = drinkDelta / nutrition.getReductionTimeMinutes();
-            if (elapsedDrink >= 1) {
-              drinkUpdateAble = true;
-            }
-            if (lastDrinkMinutes != 0 && drinkUpdateAble) {
-              for (int i = 0; i < elapsedDrink; i++) {
-                checkLevels(fox, nutrition);
-              }
-              lastDrinkMinutes = currentMinutes;
-              drinkUpdateAble = false;
-            }
-        }
+            fox.setLastDrinkInMinutes(currentMinutes);
+            drinkUpdateAble = false;
+          }
       }
+      foxService.update(fox);
     }
   }
 
