@@ -5,7 +5,7 @@ import com.gfa.programmersfoxclub.model.character.Fox;
 public interface HealthService {
   void healTotally(Fox fox);
 
-  void heal(Fox fox, int healBy);
+  boolean heal(Fox fox);
 
   void harm(Fox fox, int damage);
 }
