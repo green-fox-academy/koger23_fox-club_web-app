@@ -14,9 +14,11 @@
             </div>
             <div class="fox_details">
                 <h1 th:text="${fox.name}"></h1>
+                <p th:if="${healMessage} != null" th:text="${healMessage}" style="color: red;"></p>
                 <div class="stats">
                     <p th:text="|Born: ${fox.birthDayString}|"></p>
-                    <p th:text="|Health points: ${fox.healthPoints}| + ' %'"></p>
+                    <span th:text="|Health points: ${fox.healthPoints}| + ' %'" th:remove="tag"></span>
+                    <a th:href="@{/fox/heal}">(heal)</a>
                     <p th:text="|Food level: ${fox.food.level}| + ' / ' + ${fox.food.getMAX_LEVEL()}"></p>
                     <p th:text="|Drink level: ${fox.drink.level}| + ' / ' + ${fox.drink.getMAX_LEVEL()}"></p>
                     <p th:text="|Hunger level: ${fox.hungerLevel}| + ' / ' + ${fox.MAX_HUNGER_LEVEL}"></p>
@@ -42,5 +44,50 @@
             <span th:unless="${actionHistoryLogger.actionList.size()} != 0">No actions so far.</span>
         </div>
     </div>
+    <script>
+        var refresh_rate = 60; //<-- In seconds, change to your needs
+        var last_user_action = 0;
+        var has_focus = false;
+        var lost_focus_count = 0;
+        var focus_margin = 10; // If we lose focus more then the margin we want to refresh
+
+
+        function reset() {
+            last_user_action = 0;
+            console.log("Reset");
+        }
+
+        function windowHasFocus() {
+            has_focus = true;
+        }
+
+        function windowLostFocus() {
+            has_focus = false;
+            lost_focus_count++;
+            console.log(lost_focus_count + " <~ Lost Focus");
+        }
+
+        setInterval(function () {
+            last_user_action++;
+            refreshCheck();
+        }, 1000);
+
+        function refreshCheck() {
+            var focus = window.onfocus;
+            if ((last_user_action >= refresh_rate && !has_focus && document.readyState == "complete") || lost_focus_count > focus_margin) {
+                window.location.reload(); // If this is called no reset is needed
+                reset(); // We want to reset just to make sure the location reload is not called.
+            }
+
+        }
+        window.addEventListener("focus", windowHasFocus, false);
+        window.addEventListener("blur", windowLostFocus, false);
+        window.addEventListener("click", reset, false);
+        window.addEventListener("mousemove", reset, false);
+        window.addEventListener("keypress", reset, false);
+        window.addEventListener("scroll", reset, false);
+        document.addEventListener("touchMove", reset, false);
+        document.addEventListener("touchEnd", reset, false);
+    </script>
 </body>
 </html>
