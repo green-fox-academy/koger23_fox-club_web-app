@@ -11,4 +11,5 @@ public interface NutritionRepository extends CrudRepository<Nutrition, Long> {
   Food findFoodById(long id);
   Food findFoodByName(String name);
   Drink findDrinkByName(String name);
+  Nutrition findByName(String name);
 }
