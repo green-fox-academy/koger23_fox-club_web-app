@@ -40,10 +40,14 @@ public class Fox {
   private final int MAX_THIRST_LEVEL = 5;
   @ManyToOne(fetch = FetchType.LAZY)
   private User owner;
+  private long lastFeedInMinutes;
+  private long lastDrinkInMinutes;
 
   public Fox() {
     this.birthDayString = DateUtils.getStringDateTime();
     this.birthDateInMinutes = DateUtils.getCurrentDateTimeInMinutes();
+    long lastFeedInMinutes = DateUtils.getCurrentDateTimeInMinutes();
+    long lastDrinkInMinutes = DateUtils.getCurrentDateTimeInMinutes();
     trick_list = new ArrayList<>();
   }
 
@@ -161,6 +165,22 @@ public class Fox {
 
   public void setOwner(User owner) {
     this.owner = owner;
+  }
+
+  public long getLastFeedInMinutes() {
+    return lastFeedInMinutes;
+  }
+
+  public void setLastFeedInMinutes(long lastFeedInMinutes) {
+    this.lastFeedInMinutes = lastFeedInMinutes;
+  }
+
+  public long getLastDrinkInMinutes() {
+    return lastDrinkInMinutes;
+  }
+
+  public void setLastDrinkInMinutes(long lastDrinkInMinutes) {
+    this.lastDrinkInMinutes = lastDrinkInMinutes;
   }
 
   public List<Nutrition> getNutritions() {
