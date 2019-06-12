@@ -89,10 +89,16 @@ public class FoxController {
     return "nutritionstore";
   }
 
-  @PostMapping("/nutritionsave")
-  public String saveNutritions(Model model, @RequestParam("food") String food,
-                               @RequestParam("drink") String drink) {
-    sessionService.saveNutrition(food, drink);
+  @PostMapping("/feed")
+  public String updateFood(Model model, @RequestParam("food") String foodName) {
+    sessionService.saveNutrition(foodName);
+    model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
+    return "redirect:/";
+  }
+
+  @PostMapping("/drink")
+  public String updateDrink(Model model, @RequestParam("drink") String drinkName) {
+    sessionService.saveNutrition(drinkName);
     model.addAttribute("fox", userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex()));
     return "redirect:/";
   }
