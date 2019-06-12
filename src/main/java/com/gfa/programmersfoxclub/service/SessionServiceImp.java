@@ -3,6 +3,7 @@ package com.gfa.programmersfoxclub.service;
 import com.gfa.programmersfoxclub.model.character.Fox;
 import com.gfa.programmersfoxclub.model.nutrition.Drink;
 import com.gfa.programmersfoxclub.model.nutrition.Food;
+import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,19 +25,21 @@ public class SessionServiceImp implements SessionService {
     this.nutritionRepository = nutritionRepository;
   }
 
-  public void saveNutrition(String food, String drink) {
+  public void saveNutrition(String nutritionName) {
     Fox activeFox = userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex());
-    Food foodBefore = activeFox.getFood();
-    Drink drinkBefore = activeFox.getDrink();
+    Nutrition nutrition = nutritionRepository.findByName(nutritionName);
 
-    Food foodAfter = nutritionRepository.findFoodByName(food);
-    Drink drinkAfter = nutritionRepository.findDrinkByName(drink);
-
-    activeFox.setFood(foodAfter);
-    activeFox.setDrink(drinkAfter);
-    logger.saveNutritionChange(activeFox.getFood(), foodBefore.getName(), activeFox.getFood().getName());
-    logger.saveNutritionChange(activeFox.getDrink(), drinkBefore.getName(), activeFox.getDrink().getName());
-
+    if (nutrition.getType() == Nutrition.Type.FOOD) {
+      Food foodBefore = activeFox.getFood();
+      Food foodAfter = nutritionRepository.findFoodByName(nutritionName);
+      activeFox.setFood(foodAfter);
+      logger.saveNutritionChange(activeFox.getFood(), foodBefore.getName(), activeFox.getFood().getName());
+    } else if (nutrition.getType() == Nutrition.Type.DRINK) {
+      Drink drinkBefore = activeFox.getDrink();
+      Drink drinkAfter = nutritionRepository.findDrinkByName(nutritionName);
+      activeFox.setDrink(drinkAfter);
+      logger.saveNutritionChange(activeFox.getDrink(), drinkBefore.getName(), activeFox.getDrink().getName());
+    }
     foxService.update(activeFox);
   }
 
