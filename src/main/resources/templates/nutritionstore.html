@@ -9,16 +9,19 @@
     <div th:replace="fragments/navigation :: copy"></div>
     <div class="content">
         <div th:class="|select-menu ${fox.color}|">
-            <form th:class="${fox.color}" th:action="@{/fox/nutritionsave}" th:method="post">
-                    <label for="food">Food</label>
-                    <select id="food" name="food" class="select-menu">
-                        <option th:each="food : ${foodList}"  th:value="|${food.name}|" th:utext="|${food.name}|"></option>
-                    </select>
-                    <label for="drink">Drink</label>
-                    <select id="drink" name="drink" class="select-menu">
-                        <option th:each="drink : ${drinkList}"  th:value="|${drink.name}|" th:utext="|${drink.name}|"></option>
-                    </select>
-                    <button th:type="submit">Feed</button>
+            <form th:class="${fox.color}" th:action="@{/fox/feed}" th:method="post">
+                <label for="food">Food</label>
+                <select id="food" name="food" class="select-menu">
+                    <option th:each="food : ${foodList}" th:value="|${food.name}|" th:utext="|${food.name}|"></option>
+                </select>
+                <button th:type="submit">Feed</button>
+            </form>
+            <form th:class="${fox.color}" th:action="@{/fox/drink}" th:method="post">
+                <label for="drink">Drink</label>
+                <select id="drink" name="drink" class="select-menu">
+                    <option th:each="drink : ${drinkList}" th:value="|${drink.name}|" th:utext="|${drink.name}|"></option>
+                </select>
+                <button th:type="submit">Drink</button>
             </form>
         </div>
     </div>
