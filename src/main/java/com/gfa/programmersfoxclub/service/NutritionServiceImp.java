@@ -1,6 +1,8 @@
 package com.gfa.programmersfoxclub.service;
 
 import com.gfa.programmersfoxclub.model.character.Fox;
+import com.gfa.programmersfoxclub.model.nutrition.Drink;
+import com.gfa.programmersfoxclub.model.nutrition.Food;
 import com.gfa.programmersfoxclub.model.nutrition.Nutrition;
 import com.gfa.programmersfoxclub.repository.NutritionRepository;
 import com.gfa.programmersfoxclub.utils.date.DateUtils;
@@ -12,10 +14,14 @@ import java.util.List;
 public class NutritionServiceImp implements NutritionService {
   private NutritionRepository nutritionRepository;
   private FoxService foxService;
+  private UserService userService;
+  private Logger logger;
 
-  public NutritionServiceImp(NutritionRepository nutritionRepository, FoxService foxService) {
+  public NutritionServiceImp(NutritionRepository nutritionRepository, FoxService foxService, UserService userService, Logger logger) {
     this.nutritionRepository = nutritionRepository;
     this.foxService = foxService;
+    this.userService = userService;
+    this.logger = logger;
   }
 
   public void reduceNutritionLevel(Fox fox) {
@@ -100,13 +106,41 @@ public class NutritionServiceImp implements NutritionService {
     }
   }
 
-  public void feed(Fox fox, Nutrition nutrition) {
-    if (fox.getFood() == nutrition) {
-      fox.setHungerLevel(nutrition.getHungerReductionPoints());
-    } else {
-      fox.setThirstLevel(nutrition.getThirstReductionPoints());
+  public void saveNutrition(String nutritionName) {
+    Fox activeFox = userService.getLoggedInUser().getFoxList().get(userService.getLoggedInUser().getActiveFoxIndex());
+    Nutrition nutrition = nutritionRepository.findByName(nutritionName);
+    if (activeFox.isAlive()) {
+      if (nutrition.getType() == Nutrition.Type.FOOD) {
+        Food foodBefore = activeFox.getFood();
+        Food foodAfter = nutritionRepository.findFoodByName(nutritionName);
+        foodAfter.setLevel(foodAfter.getMAX_LEVEL());
+        nutritionRepository.save(foodAfter);
+        activeFox.setFood(foodAfter);
+        feed(activeFox, foodAfter);
+        logger.saveNutritionChange(activeFox.getFood(), foodBefore.getName(), activeFox.getFood().getName());
+      } else if (nutrition.getType() == Nutrition.Type.DRINK) {
+        Drink drinkBefore = activeFox.getDrink();
+        Drink drinkAfter = nutritionRepository.findDrinkByName(nutritionName);
+        drinkAfter.setLevel(drinkAfter.getMAX_LEVEL());
+        activeFox.setDrink(drinkAfter);
+        feed(activeFox, drinkAfter);
+        logger.saveNutritionChange(activeFox.getDrink(), drinkBefore.getName(), activeFox.getDrink().getName());
+      }
+      foxService.update(activeFox);
     }
-    startMinutes = DateUtils.getCurrentDateTimeInMinutes();
+  }
+
+  public void feed(Fox fox, Nutrition nutrition) {
+    if (nutrition.getType() == Nutrition.Type.FOOD) {
+      fox.setHungerLevel(nutrition.getHungerReductionPoints());
+      fox.setLastFeedInMinutes(DateUtils.getCurrentDateTimeInMinutes());
+      fox.setHungerLevel(0);
+    } else if (nutrition.getType() == Nutrition.Type.DRINK) {
+      fox.setThirstLevel(nutrition.getThirstReductionPoints());
+      fox.setLastDrinkInMinutes(DateUtils.getCurrentDateTimeInMinutes());
+      fox.setThirstLevel(0);
+    }
+    foxService.update(fox);
   }
 
   public void saveNutritionIfNotExists(Nutrition nutrition) {

@@ -18,4 +18,6 @@ public interface NutritionService {
   void feed(Fox fox, Nutrition nutrition);
 
   void saveNutritionIfNotExists(Nutrition nutrition);
+
+  void saveNutrition(String nutritionName);
 }
